@@ -12,12 +12,12 @@ library(googleCharts)
 # Use global max/min for axes so the view window stays
 # constant as the user moves between years
 xlim <- list(
-  min = min(data$Health.Expenditure) - 500,
-  max = max(data$Health.Expenditure) + 500
+  min = 0,
+  max = max(income$Male)+200
 )
 ylim <- list(
-  min = min(data$Life.Expectancy),
-  max = max(data$Life.Expectancy) + 3
+  min = 0,
+  max = max(income$Male)+200
 )
 
 shinyUI(fluidPage(
@@ -33,10 +33,10 @@ shinyUI(fluidPage(
              "body {font-family: 'Source Sans Pro'}"
   ),
   
-  h2("Google Charts demo"),
+  h2("Awesome demo"),
   
   googleBubbleChart("chart",
-                    width="100%", height = "475px",
+                    width="100%", height = "600px",
                     # Set the default options for this chart; they can be
                     # overridden in server.R on a per-update basis. See
                     # https://developers.google.com/chart/interactive/docs/gallery/bubblechart
@@ -82,8 +82,8 @@ shinyUI(fluidPage(
   fluidRow(
     shiny::column(4, offset = 4,
                   sliderInput("year", "Year",
-                              min = min(data$Year), max = max(data$Year),
-                              value = min(data$Year), animate = TRUE)
+                              min = min(income$Year), max = max(income$Year),
+                              value = min(income$Year), animate = TRUE, step=1)
     )
   )
 ))
