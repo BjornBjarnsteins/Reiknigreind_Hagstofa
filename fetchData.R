@@ -47,7 +47,7 @@ fetchData <- function(tableIndex){
       Male <- c(Male, income[,10+i])
       Female <- c(Female, strtoi(income[,18+i]))
     }
-    #some comment
+
     income <- data.frame(Region, Age, Year, Total, Male, Female)
     return(income)
     
