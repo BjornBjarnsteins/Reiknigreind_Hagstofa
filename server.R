@@ -1,4 +1,7 @@
 library(dplyr)
+source('fetchData.R')
+
+datalist <- list(fetchData("income_res"), fetchData("income_rsa"), fetchData("schoolreg"), fetchData("schoolgrad"))
 
 shinyServer(function(input, output, session) {
   
@@ -12,15 +15,34 @@ shinyServer(function(input, output, session) {
   )
   
   yearData <- reactive({
+    print(input$data_menu)
     # Filter to the desired year, and put the columns
     # in the order that Google's Bubble Chart expects
     # them (name, x, y, color, size). Also sort by region
     # so that Google Charts orders and colors the regions
     # consistently.
-    df <- income %>%
-      filter(Year == input$year) %>%
-      select(Economic.Activity, Male, Female, Region, Total) %>%
-      arrange(Region)
+    if(input$data_menu == "income_res") {
+      df <- datalist[[1]] %>%
+        filter(Year == input$year) %>%
+        select(Economic.Activity, Male, Female, Region, Total)  %>%
+        arrange(Region)
+    } else if(input$data_menu == "income_rsa"){
+      df <- datalist[[2]] %>%
+        filter(Year == input$year) %>%
+        select(Region, Male, Female, Age, Total)  %>%
+        arrange(Age)
+    } else if(input$data_menu == "schoolreg") {
+      df <- datalist[[3]] %>%
+        filter(Year == input$year) %>%
+        select(School, Male, Female, Total)  %>%
+        arrange(School)
+    } else if(input$data_menu == "schoolgrad") {
+      df <- datalist[[4]] %>%
+        filter(Year == input$year) %>%
+        select(Level, Male, Female, Total)  %>%
+        arrange(Level)
+    }
+    
   })
   
   output$chart <- reactive({
@@ -29,7 +51,7 @@ shinyServer(function(input, output, session) {
       data = googleDataTable(yearData()),
       options = list(
         title = sprintf(
-          "Income by age",
+          input$data_menu,
           input$year),
         series = series
       )
