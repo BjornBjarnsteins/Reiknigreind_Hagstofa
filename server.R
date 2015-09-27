@@ -32,7 +32,7 @@ shinyServer(function(input, output, session) {
       
       print(xlim)
       print(ylim)
-      updateSliderInput(session, "year", min = min(currentData$Year), max = max(currentData$Year), value=min(currentData$Year))
+      updateSliderInput(session, "year", min = min(currentData$Year), max = max(currentData$Year), value=min(currentData$Year), step=5)
     }
     
     
