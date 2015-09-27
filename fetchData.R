@@ -77,7 +77,9 @@ fetchData <- function(tableIndex){
       Female <- c(Female, data[,3+3*i])
     }
     
-    data <- data.frame(School, Year, Total, Male, Female)
+    Group <- c(School)
+    
+    data <- data.frame(School, Group, Year, Total, Male, Female)
     return(data)
     
   }else if(tableIndex == "schoolgrad"){
@@ -102,7 +104,9 @@ fetchData <- function(tableIndex){
       Female <- c(Female, data[,3+3*i])
     }
     
-    data <- data.frame(Level, Year, Total, Male, Female)
+    Group <- c(Level)
+    
+    data <- data.frame(Level, Group, Year, Total, Male, Female)
     return(data)
   }else if(tableIndex == "prisonSentences"){
     ## Population by sex and age 1841-2015
@@ -123,11 +127,6 @@ fetchData <- function(tableIndex){
     ## Population - key figures 1703-2015
     data <- data.frame(get_pxweb_data(url='http://px.hagstofa.is/pxen/api/v1/en/Ibuar/mannfjoldi/1_yfirlit/yfirlit/MAN00101.px',
                                       dims=list('Year'='*', 'Sex'='*', 'Age'='*'), clean=TRUE))
-    
-#     data1 <- data.frame(get_pxweb_data(url='http://px.hagstofa.is/pxen/api/v1/en/Ibuar/mannfjoldi/1_yfirlit/yfirlit/MAN00101.px',
-#                                        dims=list('Year'='*', 'Sex'='*', 'Age'='*'), clean=FALSE))
-#     
-#     data1$Age[1:110]
     
     data$Age = gsub("Total", "0000", data$Age)
     data$Age = gsub("Under 1 year", "0", data$Age)

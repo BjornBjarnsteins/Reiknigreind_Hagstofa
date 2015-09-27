@@ -43,12 +43,12 @@ shinyServer(function(input, output, session) {
     } else if(input$data_menu == "schoolreg") {
       df <- datalist[[3]] %>%
         filter(Year == input$year) %>%
-        select(School, Male, Female, Total)  %>%
+        select(School, Male, Female, Group, Total)  %>%
         arrange(School)
     } else if(input$data_menu == "schoolgrad") {
       df <- datalist[[4]] %>%
         filter(Year == input$year) %>%
-        select(Level, Male, Female, Total)  %>%
+        select(Level, Male, Female, Group, Total)  %>%
         arrange(Level)
     }
     
