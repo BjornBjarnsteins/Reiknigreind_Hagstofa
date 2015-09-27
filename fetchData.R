@@ -104,6 +104,28 @@ fetchData <- function(tableIndex){
     
     data <- data.frame(Level, Year, Total, Male, Female)
     return(data)
+  }else if(tableIndex == "influence"){
+    ## Ratios of women and men in positions of power
+    data <- data.frame(get_pxweb_data(url='http://px.hagstofa.is/pxen/api/v1/en/Samfelag/felagsmal/jafnrettismal/3_kk75/HEI11507.px',
+                                      dims=list('power and decision making'='*', 'year'='*', 'sex'='*'), clean=FALSE))
+    
+    n <- dim(data)[1]
+    years <- seq(from=1975, to=2005, by=10)
+    
+    Year <- c()
+    Male <- c()
+    Female <-c()
+    Position <- c()
+    
+    for(i in c(1:floor(dim(data)[2]/2))) {
+      Year <- c(Year, rep(years[i], n))
+      Male <- c(Male, data[,1+2*i])
+      Female <- c(Female, data[,2*i])
+      Position <- c(Position, data[,1][i])
+    }
+    
+    data <- data.frame(Year, Position, Male, Female)
+    return(data)
   }
 }
 
