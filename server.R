@@ -56,6 +56,7 @@ shinyServer(function(input, output, session) {
         filter(Year == input$year) %>%
         select(Age, Males, Females)  %>%
         arrange(Age)
+#       df$Males <- -df$Males
     }
     
   })

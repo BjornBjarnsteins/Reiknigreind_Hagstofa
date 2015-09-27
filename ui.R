@@ -38,19 +38,20 @@ shinyUI(fluidPage(
   mainPanel(
     
     conditionalPanel(
-      condition = "input.data_menu == 'Age Pyramid'"
+      condition = "input.data_menu == 'population'",
       
-      #         plotOutput(
-      #           "chart",
-      #           width="100%", height = "600px"
-      #         )
-      #         
+      googleBarChart(
+        "barChart",
+        width="100%", height = "600px",
+        options = list(
+        )
+      )
     ),
     
     conditionalPanel(
-      condition = "input.data_menu != 'Age Pyramid'",
+      condition = "input.data_menu != 'population'",
       googleBubbleChart(
-        "chart",
+        "bubbleChart",
         width="100%", height = "600px",
         # Set the default options for this chart; they can be
         # overridden in server.R on a per-update basis. See

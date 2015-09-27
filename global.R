@@ -1,10 +1,10 @@
 source('fetchData.R')
 
-selectIndex <- c(1,2,3,4,5)
-names(selectIndex) <- c("income_res", "income_rsa", "schoolreg", "schoolgrad", "prisonSentences")
+selectIndex <- c(1,2,3,4,5,6)
+names(selectIndex) <- c("income_res", "income_rsa", "schoolreg", "schoolgrad", "prisonSentences","population")
 
-datalist <- list(fetchData("income_res"), fetchData("income_rsa"), fetchData("schoolreg"), fetchData("schoolgrad"), fetchData("prisonSentences"))
-data_menu <- c("Income by Economic Activity" = "income_res", "Income by Age" = "income_rsa", "Registered students in undergraduate programs"="schoolreg", "Graduated students by school levels"="schoolgrad", "Prison sentences"="prisonSentences")
+datalist <- list(fetchData("income_res"), fetchData("income_rsa"), fetchData("schoolreg"), fetchData("schoolgrad"), fetchData("prisonSentences"), fetchData("population"))
+data_menu <- c("Income by Economic Activity" = "income_res", "Income by Age" = "income_rsa", "Registered students in undergraduate programs"="schoolreg", "Graduated students by school levels"="schoolgrad", "Prison sentences"="prisonSentences", "Population by Gender"="population")
 
 tablename <- "income_res"
 # 

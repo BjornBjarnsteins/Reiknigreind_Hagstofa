@@ -165,7 +165,7 @@ fetchData <- function(tableIndex){
     data$Age = gsub("0000", "-1", data$Age)
     data$Age = as.numeric(data$Age)
     
-    #data$Year = as.numeric(as.character(data$Year))
+    data$Year = as.numeric(as.character(data$Year))
     #data = data[data$Year>1994,]
     males = data[data$Sex=='Males', ]
     females = data[data$Sex=='Females', ]
