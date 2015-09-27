@@ -5,25 +5,24 @@ shinyServer(function(input, output, session) {
   # different series happen to be ordered differently from year to year.
   # http://andrewgelman.com/2014/09/11/mysterious-shiny-things/
   defaultColors <-c("#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#74104d", "#ce3303", "#4f40b5", "#fa648d", "#4792de")
+  
   series <- structure(
     lapply(defaultColors, function(color) { list(color=color) }),
     names = levels(datalist[[1]]$Region)
   )
   
+  
   yearData <- reactive({
-    tablename <- input$data_menu
+    print("Reactive shit")
+    print(tablename)
+    differentTable <- tablename != input$data_menu
+    print(differentTable)
+    tablename <<- input$data_menu
     currentData <- datalist[[selectIndex[tablename]]]
-    
-    xlim <- list(
-      min = 0,
-      max = max(currentData$Male)+200
-    )
-    ylim <- list(
-      min = 0,
-      max = max(currentData$Male)+200
-    )
-    
-    updateSliderInput(session, "year", min = min(currentData$Year), max = max(currentData$Year), value=min(currentData$Year))
+    if(differentTable){
+      print("Changing tables")
+      updateSliderInput(session, "year", min = min(currentData$Year), max = max(currentData$Year), value=min(currentData$Year))
+    }
     
     
     # Filter to the desired year, and put the columns
