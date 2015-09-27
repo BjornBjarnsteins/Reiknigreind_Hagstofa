@@ -104,6 +104,67 @@ fetchData <- function(tableIndex){
     
     data <- data.frame(Level, Year, Total, Male, Female)
     return(data)
+  }else if(tableIndex == "prisonSentences"){
+    ## Population by sex and age 1841-2015
+    data <- data.frame(get_pxweb_data(url='http://px.hagstofa.is/pxen/api/v1/en/Samfelag/domsmal/afbrot/KOS02200.px',
+                                      dims=list('Year'='*', 'Reason'='*', 'Sex'='*'), clean=TRUE))
+    
+    data$Year = as.numeric(as.character(data$Year))
+    data = data[data$Year>1994,]
+    males = data[data$Sex=='Males', ]
+    females = data[data$Sex=='Females', ]
+    total = data[data$Sex=='Total', ]
+    
+    data1 = data.frame(total$Year, total$Reason, total$values, males$values, females$values)
+    colnames(data1) = c('Year', 'Reason', 'Total', 'Males', 'Females')
+
+    return(data1)
+  }else if(tableIndex == "population"){
+    ## Population - key figures 1703-2015
+    data <- data.frame(get_pxweb_data(url='http://px.hagstofa.is/pxen/api/v1/en/Ibuar/mannfjoldi/1_yfirlit/yfirlit/MAN00101.px',
+                                      dims=list('Year'='*', 'Sex'='*', 'Age'='*'), clean=TRUE))
+    
+#     data1 <- data.frame(get_pxweb_data(url='http://px.hagstofa.is/pxen/api/v1/en/Ibuar/mannfjoldi/1_yfirlit/yfirlit/MAN00101.px',
+#                                        dims=list('Year'='*', 'Sex'='*', 'Age'='*'), clean=FALSE))
+#     
+#     data1$Age[1:110]
+    
+    data$Age = gsub("Total", "0000", data$Age)
+    data$Age = gsub("Under 1 year", "0", data$Age)
+    data$Age = gsub("[^0-9]", "", data$Age)
+    data$Age = gsub("0000", "-1", data$Age)
+    data$Age = as.numeric(data$Age)
+    
+    #data$Year = as.numeric(as.character(data$Year))
+    #data = data[data$Year>1994,]
+    males = data[data$Sex=='Males', ]
+    females = data[data$Sex=='Females', ]
+    total = data[data$Sex=='Total', ]
+    
+    data = data.frame(males$Year, as.numeric(males$Age), total$values, males$values, females$values)
+    colnames(data) = c('Year', 'Age', 'Total', 'Males', 'Females')
+    return(data)
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
