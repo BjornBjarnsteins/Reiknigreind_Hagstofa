@@ -32,7 +32,7 @@ shinyUI(fluidPage(
   
   sidebarLayout(
       sidebarPanel(
-        selectInput("data_menu", "Data", c("Income by Economic Activity" = "income_res", "Income by Age" = "income_rsa", "Registered students in undergraduate programs"="schoolreg", "Graduated students by school levels"="schoolgrad", "Prison sentences"="prisonSentences")),
+        selectInput("data_menu", "Data", data_menu),
         sliderInput("year", "Year",
                     min = min(datalist[[1]]$Year), max = max(datalist[[1]]$Year),
                     value = min(datalist[[1]]$Year), animate = TRUE, step=1)
@@ -52,11 +52,11 @@ shinyUI(fluidPage(
                             fontSize = 13,
                             # Set axis labels and ranges
                             hAxis = list(
-                              title = "Age (Years)",
+                              title = "Males",
                               viewWindow = xlim
                             ),
                             vAxis = list(
-                              title = "Income (ISK)",
+                              title = "Females",
                               viewWindow = ylim
                             ),
                             # The default padding is a little too spaced out
