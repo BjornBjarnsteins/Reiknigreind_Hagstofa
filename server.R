@@ -13,8 +13,6 @@ shinyServer(function(input, output, session) {
   
   
   yearData <- reactive({
-    print("Reactive shit")
-    print(tablename)
     differentTable <- tablename != input$data_menu
     print(differentTable)
     tablename <<- input$data_menu
@@ -60,7 +58,7 @@ shinyServer(function(input, output, session) {
       data = googleDataTable(yearData()),
       options = list(
         title = sprintf(
-          input$data_menu,
+          names(data_menu)[selectIndex[input$data_menu]],
           input$year),
         series = series
       )

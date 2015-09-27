@@ -4,6 +4,7 @@ selectIndex <- c(1,2,3,4)
 names(selectIndex) <- c("income_res", "income_rsa", "schoolreg", "schoolgrad")
 
 datalist <- list(fetchData("income_res"), fetchData("income_rsa"), fetchData("schoolreg"), fetchData("schoolgrad"))
+data_menu <- c("Income by Economic Activity" = "income_res", "Income by Age" = "income_rsa", "Registered students in undergraduate programs"="schoolreg", "Graduated students by school levels"="schoolgrad")
 
 tablename <- "income_res"
 # 
