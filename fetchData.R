@@ -171,7 +171,7 @@ fetchData <- function(tableIndex){
     females = data[data$Sex=='Females', ]
     total = data[data$Sex=='Total', ]
     
-    data = data.frame(males$Year, as.numeric(males$Age), total$values, males$values, females$values)
+    data = data.frame(males$Year, as.numeric(males$Age), total$values, -males$values, females$values)
     colnames(data) = c('Year', 'Age', 'Total', 'Males', 'Females')
     return(data)
   }
