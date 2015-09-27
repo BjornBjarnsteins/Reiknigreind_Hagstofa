@@ -49,7 +49,7 @@ shinyServer(function(input, output, session) {
     } else if(input$data_menu == "prisonSentences") {
       df <- datalist[[5]] %>%
         filter(Year == input$year) %>%
-        select(Reason, Males, Females)  %>%
+        select(Reason, Males, Females, Group, Total)  %>%
         arrange(Reason)
     }
     
