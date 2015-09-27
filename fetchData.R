@@ -25,7 +25,7 @@ fetchData <- function(tableIndex){
     }
     
     data <- data.frame(Region, Economic.Activity, Year, Total, Male, Female)
-    colnames(data) <- c("Region", "Economic Activity", "Year", "Total", "Male", "Female")
+    colnames(data) <- c("Region", "Economic.Activity", "Year", "Total", "Male", "Female")
     return(data)
   }else if(tableIndex == "income_rsa"){
     ## Average income by region, sex and age 1998-2005 
