@@ -48,6 +48,11 @@ shinyUI(fluidPage(
         "barChart",
         width="100%", height = "600px",
         options = list(
+          # The default padding is a little too spaced out
+          chartArea = list(
+            top = 50, left = 75, right = 175,
+            height = "75%", width = "75%"
+          ),
           # Set axis labels and ranges
           hAxis = list(
             title = "Population",
