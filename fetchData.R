@@ -143,8 +143,8 @@ fetchData <- function(tableIndex){
     
     Group <- c(total$Reason)
     
-    data1 = data.frame(total$Year, total$Reason, total$values, males$values, females$values, Group)
-    colnames(data1) = c('Year', 'Reason', 'Total', 'Males', 'Females', 'Group')
+    data1 = data.frame(total$Year, total$Reason, Group, total$values, males$values, females$values)
+    colnames(data1) = c('Year', 'Reason', 'Group', 'Total', 'Males', 'Females')
 
     return(data1) 
   }else if(tableIndex == "population"){

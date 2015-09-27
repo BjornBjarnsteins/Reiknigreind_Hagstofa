@@ -48,6 +48,17 @@ shinyUI(fluidPage(
         "barChart",
         width="100%", height = "600px",
         options = list(
+          # Set axis labels and ranges
+          hAxis = list(
+            title = "Population",
+            minValue = "-3000",
+            maxValue = "3000"
+          ),
+          vAxis = list(
+            title = "Age",
+            minValue = 0,
+            maxValue = 110
+          )
         )
       )
     ),
