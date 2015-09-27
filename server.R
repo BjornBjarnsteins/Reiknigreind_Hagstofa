@@ -13,8 +13,6 @@ shinyServer(function(input, output, session) {
   
   
   yearData <- reactive({
-    print("Reactive shit")
-    print(tablename)
     differentTable <- tablename != input$data_menu
     print(differentTable)
     tablename <<- input$data_menu
@@ -50,6 +48,11 @@ shinyServer(function(input, output, session) {
         filter(Year == input$year) %>%
         select(Level, Male, Female, Group, Total)  %>%
         arrange(Level)
+    } else if(input$data_menu == "prisonSentences") {
+      df <- datalist[[5]] %>%
+        filter(Year == input$year) %>%
+        select(Reason, Males, Females)  %>%
+        arrange(Reason)
     }
     
   })
@@ -60,7 +63,7 @@ shinyServer(function(input, output, session) {
       data = googleDataTable(yearData()),
       options = list(
         title = sprintf(
-          input$data_menu,
+          names(data_menu)[selectIndex[input$data_menu]],
           input$year),
         series = series
       )
