@@ -32,7 +32,7 @@ shinyUI(fluidPage(
   
   sidebarLayout(
       sidebarPanel(
-        selectInput("data_menu", "Data", c("Income by Economic Activity" = "income_res", "Income by Age" = "income_rsa", "Registered students in undergraduate programs"="schoolreg", "Graduated students by school levels"="schoolgrad")),
+        selectInput("data_menu", "Data", c("Income by Economic Activity" = "income_res", "Income by Age" = "income_rsa", "Registered students in undergraduate programs"="schoolreg", "Graduated students by school levels"="schoolgrad", "Prison sentences"="prisonSentences")),
         sliderInput("year", "Year",
                     min = min(datalist[[1]]$Year), max = max(datalist[[1]]$Year),
                     value = min(datalist[[1]]$Year), animate = TRUE, step=1)

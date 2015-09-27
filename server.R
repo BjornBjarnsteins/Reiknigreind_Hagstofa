@@ -50,6 +50,11 @@ shinyServer(function(input, output, session) {
         filter(Year == input$year) %>%
         select(Level, Male, Female, Total)  %>%
         arrange(Level)
+    } else if(input$data_menu == "prisonSentences") {
+      df <- datalist[[5]] %>%
+        filter(Year == input$year) %>%
+        select(Reason, Males, Females)  %>%
+        arrange(Reason)
     }
     
   })

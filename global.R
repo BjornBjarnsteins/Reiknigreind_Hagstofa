@@ -1,9 +1,9 @@
 source('fetchData.R')
 
-selectIndex <- c(1,2,3,4)
-names(selectIndex) <- c("income_res", "income_rsa", "schoolreg", "schoolgrad")
+selectIndex <- c(1,2,3,4,5)
+names(selectIndex) <- c("income_res", "income_rsa", "schoolreg", "schoolgrad", "prisonSentences")
 
-datalist <- list(fetchData("income_res"), fetchData("income_rsa"), fetchData("schoolreg"), fetchData("schoolgrad"))
+datalist <- list(fetchData("income_res"), fetchData("income_rsa"), fetchData("schoolreg"), fetchData("schoolgrad"), fetchData("prisonSentences"))
 
 tablename <- "income_res"
 # 
