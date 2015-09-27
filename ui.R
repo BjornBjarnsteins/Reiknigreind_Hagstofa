@@ -8,23 +8,14 @@
 library(shiny)
 library(googleCharts)
 
-
 # Use global max/min for axes so the view window stays
 # constant as the user moves between years
-xlim <- list(
-  min = 0,
-  max = max(income$Male)+200
-)
-ylim <- list(
-  min = 0,
-  max = max(income$Male)+200
-)
 
 shinyUI(fluidPage(
-  
+
   # This line loads the Google Charts JS library
   googleChartsInit(),
-  
+    
   # Use the Google webfont "Source Sans Pro"
   tags$link(
     href=paste0("http://fonts.googleapis.com/css?",
@@ -37,12 +28,14 @@ shinyUI(fluidPage(
   
   h2("Awesome demo"),
   
+
+  
   sidebarLayout(
       sidebarPanel(
         selectInput("data_menu", "Data", c("Income by Economic Activity" = "income_res", "Income by Age" = "income_rsa", "Registered students in undergraduate programs"="schoolreg", "Graduated students by school levels"="schoolgrad")),
         sliderInput("year", "Year",
-                    min = min(income$Year), max = max(income$Year),
-                    value = min(income$Year), animate = TRUE, step=1)
+                    min = min(datalist[[1]]$Year), max = max(datalist[[1]]$Year),
+                    value = min(datalist[[1]]$Year), animate = TRUE, step=1)
         ),
       
 
