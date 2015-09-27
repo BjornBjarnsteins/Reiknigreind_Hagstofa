@@ -33,6 +33,8 @@ shinyServer(function(input, output, session) {
       print(xlim)
       print(ylim)
       updateSliderInput(session, "year", min = min(currentData$Year), max = max(currentData$Year), value=min(currentData$Year))
+      updateSliderInput(session, "year2", min = min(currentData$Year), max = max(currentData$Year), value=min(currentData$Year))
+      updateSliderInput(session, "year3", min = min(currentData$Year), max = max(currentData$Year), value=min(currentData$Year))
     }
     
     
@@ -88,7 +90,7 @@ shinyServer(function(input, output, session) {
         arrange(School)
     } else if(input$data_menu == "schoolgrad") {
       df <- datalist[[4]] %>%
-        filter(Year == input$year) %>%
+        filter(Year == input$year3) %>%
         select(Level, Male, Female, Group, Total)  %>%
         arrange(Level)
     } else if(input$data_menu == "prisonSentences") {
@@ -108,7 +110,7 @@ shinyServer(function(input, output, session) {
         arrange(Reason)
     } else if(input$data_menu == "population") {
       df <- subset(datalist[[6]], Age != -1) %>%
-        filter(Year == input$year) %>%
+        filter(Year == input$year2) %>%
         select(Age, Males, Females)  %>%
         arrange(Age)
     }

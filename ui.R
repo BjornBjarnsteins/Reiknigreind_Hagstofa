@@ -35,11 +35,26 @@ shinyUI(fluidPage(
       checkboxGroupInput("dist", "Distribution type:",
                        c("Grouped data" = "grouped",
                          "Total values" = "total"),
-                       selected = c("grouped", "total"))
+                       selected = c("grouped", "total")),
+      sliderInput("year", "Year",
+                  min = min(datalist[[1]]$Year), max = max(datalist[[1]]$Year),
+                  value = min(datalist[[1]]$Year), animate = TRUE, step=1)
+      
     ),
-    sliderInput("year", "Year",
-                min = min(datalist[[1]]$Year), max = max(datalist[[1]]$Year),
-                value = min(datalist[[1]]$Year), animate = TRUE, step=1)
+    conditionalPanel(
+      condition = "input.data_menu === 'population'",
+      sliderInput("year2", "Year",
+                  min = min(datalist[[1]]$Year), max = max(datalist[[1]]$Year),
+                  value = min(datalist[[1]]$Year), animate = animationOptions(interval=50, loop=F), step=1)
+      
+    ),
+    conditionalPanel(
+      condition = "input.data_menu === 'schoolgrad'",
+      sliderInput("year3", "Year",
+                  min = min(datalist[[1]]$Year), max = max(datalist[[1]]$Year),
+                  value = min(datalist[[1]]$Year), animate = TRUE, step=1)
+      
+    )
   ),
   
   mainPanel(

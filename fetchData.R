@@ -141,7 +141,7 @@ fetchData <- function(tableIndex){
     females = data[data$Sex=='Females', ]
     total = data[data$Sex=='Total', ]
     
-    Group <- c(total$Reason)
+    Group <- c(as.character(total$Reason))
     
     data1 = data.frame(total$Year, total$Reason, Group, total$values, males$values, females$values)
     colnames(data1) = c('Year', 'Reason', 'Group', 'Total', 'Males', 'Females')
