@@ -14,11 +14,9 @@ shinyServer(function(input, output, session) {
   
   yearData <- reactive({
     differentTable <- tablename != input$data_menu
-    print(differentTable)
     tablename <<- input$data_menu
     currentData <- datalist[[selectIndex[tablename]]]
     if(differentTable){
-      print("Changing tables")
       updateSliderInput(session, "year", min = min(currentData$Year), max = max(currentData$Year), value=min(currentData$Year))
     }
     
