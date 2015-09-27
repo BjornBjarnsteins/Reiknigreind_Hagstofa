@@ -32,7 +32,10 @@ shinyUI(fluidPage(
     selectInput("data_menu", "Data", data_menu),
     sliderInput("year", "Year",
                 min = min(datalist[[1]]$Year), max = max(datalist[[1]]$Year),
-                value = min(datalist[[1]]$Year), animate = TRUE, step=1)
+                value = min(datalist[[1]]$Year), animate = TRUE, step=1),
+    checkboxGroupInput("dist", "Distribution type:",
+                 c("Grouped data" = "grouped",
+                   "Total values" = "total"))
   ),
   
   mainPanel(
