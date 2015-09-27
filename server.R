@@ -51,11 +51,28 @@ shinyServer(function(input, output, session) {
         filter(Year == input$year) %>%
         select(Reason, Males, Females)  %>%
         arrange(Reason)
+    } else if(input$data_menu == "population") {
+      df <- subset(datalist[[6]], Age != -1) %>%
+        filter(Year == input$year) %>%
+        select(Age, Males, Females)  %>%
+        arrange(Age)
     }
     
   })
   
-  output$chart <- reactive({
+  output$bubbleChart <- reactive({
+    # Return the data and options
+    list(
+      data = googleDataTable(yearData()),
+      options = list(
+        title = sprintf(
+          names(data_menu)[selectIndex[input$data_menu]],
+          input$year),
+        series = series
+      )
+    )
+  })
+  output$barChart <- reactive({
     # Return the data and options
     list(
       data = googleDataTable(yearData()),
