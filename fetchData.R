@@ -118,7 +118,7 @@ fetchData <- function(tableIndex){
     data1 = data.frame(total$Year, total$Reason, total$values, males$values, females$values)
     colnames(data1) = c('Year', 'Reason', 'Total', 'Males', 'Females')
 
-    return(data1)
+    return(data1) 
   }else if(tableIndex == "population"){
     ## Population - key figures 1703-2015
     data <- data.frame(get_pxweb_data(url='http://px.hagstofa.is/pxen/api/v1/en/Ibuar/mannfjoldi/1_yfirlit/yfirlit/MAN00101.px',
