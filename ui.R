@@ -26,7 +26,7 @@ shinyUI(fluidPage(
   ),
   
   
-  h2("Awesome demo"),
+  h2("Gender Disparity in Iceland"),
   
   sidebarPanel(
     selectInput("data_menu", "Data", data_menu),
@@ -54,8 +54,16 @@ shinyUI(fluidPage(
                   min = min(datalist[[1]]$Year), max = max(datalist[[1]]$Year),
                   value = min(datalist[[1]]$Year), animate = TRUE, step=1)
       
-    )
+    ),
+    includeHTML("about.html")
+    
+  
   ),
+
+
+
+  
+  
   
   mainPanel(
     
