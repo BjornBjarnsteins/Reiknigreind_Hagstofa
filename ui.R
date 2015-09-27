@@ -30,12 +30,13 @@ shinyUI(fluidPage(
   
   sidebarPanel(
     selectInput("data_menu", "Data", data_menu),
+    checkboxGroupInput("dist", "Distribution type:",
+                       c("Grouped data" = "grouped",
+                         "Total values" = "total"),
+                       selected = c("grouped", "total")),
     sliderInput("year", "Year",
                 min = min(datalist[[1]]$Year), max = max(datalist[[1]]$Year),
-                value = min(datalist[[1]]$Year), animate = TRUE, step=1),
-    checkboxGroupInput("dist", "Distribution type:",
-                 c("Grouped data" = "grouped",
-                   "Total values" = "total"))
+                value = min(datalist[[1]]$Year), animate = TRUE, step=1)
   ),
   
   mainPanel(
@@ -66,11 +67,13 @@ shinyUI(fluidPage(
           # Set axis labels and ranges
           hAxis = list(
             title = "Males",
-            viewWindow = xlim
+            minValue = xlim[1],
+            maxValue = xlim[2]
           ),
           vAxis = list(
             title = "Females",
-            viewWindow = ylim
+            minValue = ylim[1],
+            maxValue = ylim[2]
           ),
           # The default padding is a little too spaced out
           chartArea = list(

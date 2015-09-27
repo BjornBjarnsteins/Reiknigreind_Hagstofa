@@ -59,7 +59,6 @@ fetchData <- function(tableIndex){
     ## Registered students at upper secondary and tertiary level by sex and detailed fields 2007-2013
     data <- data.frame(get_pxweb_data(url='http://px.hagstofa.is/pxen/api/v1/en/Samfelag/skolamal/0_yfirlit/SKO00001.px',
                                       dims=list('ISCED Level'='Total', 'School'='*', 'Line of study'='Total', 'Year'='*', 'Sex'='*'), clean=FALSE))
-    data <- subset(data, School != 'Total')
     
     n <- dim(data)[1]
     years <- c(2007:2013)
@@ -136,7 +135,6 @@ fetchData <- function(tableIndex){
     data <- data.frame(get_pxweb_data(url='http://px.hagstofa.is/pxen/api/v1/en/Samfelag/domsmal/afbrot/KOS02200.px',
                                       dims=list('Year'='*', 'Reason'='*', 'Sex'='*'), clean=TRUE))
     
-    data <- subset(data, Reason != 'Total')
     data$Year = as.numeric(as.character(data$Year))
     data = data[data$Year>1994,]
     males = data[data$Sex=='Males', ]
