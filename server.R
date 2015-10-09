@@ -1,3 +1,11 @@
+# ################################################################################# #
+# REI101M                     Hópverkefni 1               Háskóli Íslands, okt 2015 #       
+#                                                                                   #
+# Andrea Björk Björnsdóttir                                                         #
+# Björn Bjarnsteinsson                                                              #
+# Leó Jóhannsson                                                                    #
+# ################################################################################# #
+
 library(dplyr)
 
 shinyServer(function(input, output, session) {
@@ -11,27 +19,25 @@ shinyServer(function(input, output, session) {
     names = levels(datalist[[1]]$Region)
   )
   
-  
+  # yearData is the input function for google charts package, it returns df, the main data frame for all our data by year.
+  # The data depends on our data_menu input where the data is specified.
   yearData <- reactive({
-    print(input$dist)
-    print(input$dist[1])
-    
     differentTable <- tablename != input$data_menu
+    # Global var for easily acquiring index of the table: 
     tablename <<- input$data_menu
     currentData <- datalist[[selectIndex[tablename]]]
     
     if(differentTable){
       xlim <<- list(
         min = 0,
-        max = max(currentData$Male)+200
+        max = max(max(currentData$Male), max(currentData$Female))+200
       )
       ylim <<- list(
         min = 0,
-        max = max(currentData$Male)+200
+        max = max(max(currentData$Male), max(currentData$Female))+200
       )
       
-      print(xlim)
-      print(ylim)
+      # Update the slider for our various graphs, since the data is not all from the same years.
       updateSliderInput(session, "year", min = min(currentData$Year), max = max(currentData$Year), value=min(currentData$Year))
       updateSliderInput(session, "year2", min = min(currentData$Year), max = max(currentData$Year), value=min(currentData$Year))
       updateSliderInput(session, "year3", min = min(currentData$Year), max = max(currentData$Year), value=min(currentData$Year))
@@ -43,6 +49,8 @@ shinyServer(function(input, output, session) {
     # them (name, x, y, color, size). Also sort by region
     # so that Google Charts orders and colors the regions
     # consistently.
+    
+    # Income by Economic Activity
     if(input$data_menu == "income_res") {
       if('total' %in% input$dist && 'grouped' %in% input$dist) {
         data <- datalist[[1]]
@@ -58,6 +66,8 @@ shinyServer(function(input, output, session) {
         filter(Year == input$year) %>%
         select(Economic.Activity, Male, Female, Region, Total)  %>%
         arrange(Region)
+      
+      # Income by Age
     } else if(input$data_menu == "income_rsa"){
       if('total' %in% input$dist && 'grouped' %in% input$dist) {
         data <- datalist[[2]]
@@ -73,6 +83,8 @@ shinyServer(function(input, output, session) {
         filter(Year == input$year) %>%
         select(Region, Male, Female, Age, Total)  %>%
         arrange(Age)
+      
+      # Registered students in undergraduate programs
     } else if(input$data_menu == "schoolreg") {
       if('total' %in% input$dist && 'grouped' %in% input$dist) {
         data <- datalist[[3]]
@@ -88,11 +100,15 @@ shinyServer(function(input, output, session) {
         filter(Year == input$year) %>%
         select(School, Male, Female, Group, Total)  %>%
         arrange(School)
+      
+      # Graduated students by school level
     } else if(input$data_menu == "schoolgrad") {
       df <- datalist[[4]] %>%
         filter(Year == input$year3) %>%
         select(Level, Male, Female, Group, Total)  %>%
         arrange(Level)
+      
+      # Prison sentences
     } else if(input$data_menu == "prisonSentences") {
       if('total' %in% input$dist && 'grouped' %in% input$dist) {
         data <- datalist[[5]]
@@ -108,6 +124,8 @@ shinyServer(function(input, output, session) {
         filter(Year == input$year) %>%
         select(Reason, Males, Females, Group, Total)  %>%
         arrange(Reason)
+      
+      # Population by age
     } else if(input$data_menu == "population") {
       df <- subset(datalist[[6]], Age != -1) %>%
         filter(Year == input$year2) %>%
@@ -117,6 +135,7 @@ shinyServer(function(input, output, session) {
     
   })
   
+  # Using google charts function as used in the bubble chart demo
   output$bubbleChart <- reactive({
     # Return the data and options
     list(
