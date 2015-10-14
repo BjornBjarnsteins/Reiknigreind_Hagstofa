@@ -1,0 +1,18 @@
+---
+title: "Gender Disparity"
+author: "Andrea Bjork Bjornsdottir - Bjorn Bjarnsteinsson - Leo Johannsson"
+date: "October 9, 2015"
+output: html_document
+runtime: shiny
+---
+
+```{r, echo=FALSE}
+shinyAppDir(
+  ".",
+  options=list(
+    width="100%",
+    height="700px"
+  )
+)
+```
+
