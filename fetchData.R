@@ -7,6 +7,7 @@
 # ################################################################################# #
 
 require(pxweb)
+update_pxweb_apis()
 # Use: d <- fetchData(tableIndex)
 # Pre: tableIndex is the table ID, in {"income_res", "income_rsa", "schoolreg", "schoolgrad", "prisonSentences","population"}
 # Post: d is our data fetched from hagstofa.is using their px.hagstofa.is API. The data frame structures have been 

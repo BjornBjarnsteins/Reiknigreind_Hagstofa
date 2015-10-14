@@ -15,7 +15,6 @@
 
 library(shiny)
 library(googleCharts)
-
 # Use global max/min for axes so the view window stays
 # constant as the user moves between years
 
