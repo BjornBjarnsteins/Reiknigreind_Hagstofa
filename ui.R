@@ -15,6 +15,7 @@
 
 library(shiny)
 library(googleCharts)
+
 # Use global max/min for axes so the view window stays
 # constant as the user moves between years
 
@@ -89,8 +90,9 @@ shinyUI(fluidPage(
             # Set axis labels and ranges
             hAxis = list(
               title = "Population",
-              minValue = "-3000",
-              maxValue = "3000"
+              minValue = -3000,
+              maxValue = 3000,
+              ticks = list(-3000,-2000,-1000,0,1000,2000,3000)
             ),
             vAxis = list(
               title = "Age",
@@ -114,17 +116,6 @@ shinyUI(fluidPage(
           options = list(
             fontName = "Source Sans Pro",
             fontSize = 13,
-            # Set axis labels and ranges
-            hAxis = list(
-              title = "Males",
-              minValue = xlim[1],
-              maxValue = xlim[2]
-            ),
-            vAxis = list(
-              title = "Females",
-              minValue = ylim[1],
-              maxValue = ylim[2]
-            ),
             # The default padding is a little too spaced out
             chartArea = list(
               top = 50, left = 75, right = 175,

@@ -28,13 +28,9 @@ shinyServer(function(input, output, session) {
     currentData <- datalist[[selectIndex[tablename]]]
     
     if(differentTable){
-      xlim <<- list(
+      lim <<- list(
         min = 0,
-        max = max(max(currentData$Male), max(currentData$Female))+200
-      )
-      ylim <<- list(
-        min = 0,
-        max = max(max(currentData$Male), max(currentData$Female))+200
+        max = max(max(currentData$Male[!is.na(currentData$Male)]), max(currentData$Female[!is.na(currentData$Female)]))+200
       )
       
       # Update the slider for our various graphs, since the data is not all from the same years.
@@ -62,6 +58,11 @@ shinyServer(function(input, output, session) {
         data <- subset(datalist[[1]], Region == '')
       }
       
+      lim <<- list(
+        min = 0,
+        max = max(max(data$Male[!is.na(data$Male)]), max(data$Female[!is.na(data$Female)]))+200
+      )
+      
       df <- data %>%
         filter(Year == input$year) %>%
         select(Economic.Activity, Male, Female, Region, Total)  %>%
@@ -78,6 +79,11 @@ shinyServer(function(input, output, session) {
       } else {
         data <- subset(datalist[[2]], Region == '')
       }
+      
+      lim <<- list(
+        min = 0,
+        max = 6000 # the code always returned around 11000 here for seemingly no reason ?!?
+        )
       
       df <- data %>%
         filter(Year == input$year) %>%
@@ -96,6 +102,11 @@ shinyServer(function(input, output, session) {
         data <- subset(datalist[[3]], School == '')
       }
       
+      lim <<- list(
+        min = 0,
+        max = max(max(data$Male[!is.na(data$Male)]), max(data$Female[!is.na(data$Female)]))+200
+      )
+      
       df <- data %>%
         filter(Year == input$year) %>%
         select(School, Male, Female, Group, Total)  %>%
@@ -103,6 +114,13 @@ shinyServer(function(input, output, session) {
       
       # Graduated students by school level
     } else if(input$data_menu == "schoolgrad") {
+      data <- datalist[[4]]
+      
+      lim <<- list(
+        min = 0,
+        max = max(max(data$Male[!is.na(data$Male)]), max(data$Female[!is.na(data$Female)]))+200
+      )
+      
       df <- datalist[[4]] %>%
         filter(Year == input$year3) %>%
         select(Level, Male, Female, Group, Total)  %>%
@@ -120,6 +138,11 @@ shinyServer(function(input, output, session) {
         data <- subset(datalist[[5]], Reason == '')
       }
       
+      lim <<- list(
+        min = 0,
+        max = max(max(data$Male[!is.na(data$Male)]), max(data$Female[!is.na(data$Female)]))+10
+      )
+      
       df <- data %>%
         filter(Year == input$year) %>%
         select(Reason, Males, Females, Group, Total)  %>%
@@ -127,11 +150,21 @@ shinyServer(function(input, output, session) {
       
       # Population by age
     } else if(input$data_menu == "population") {
+      data <- datalist[[6]]
+      
+      lim <<- list(
+        min = 0,
+        max = max(max(data$Male[!is.na(data$Male)]), max(data$Female[!is.na(data$Female)]))+200
+      )
+      
       df <- subset(datalist[[6]], Age != -1) %>%
         filter(Year == input$year2) %>%
         select(Age, Males, Females)  %>%
         arrange(Age)
     }
+    
+    #print("banana")
+    #print(max(max(data$Male[!is.na(data$Male)]), max(data$Female[!is.na(data$Female)]))+200)
     
   })
   
@@ -144,6 +177,17 @@ shinyServer(function(input, output, session) {
         title = sprintf(
           names(data_menu)[selectIndex[input$data_menu]],
           input$year),
+        # Set axis labels and ranges
+        hAxis = list(
+          title = "Males",
+          minValue = lim$min,
+          maxValue = lim$max
+        ),
+        vAxis = list(
+          title = "Females",
+          minValue = lim$min,
+          maxValue = lim$max
+        ),
         series = series
       )
     )

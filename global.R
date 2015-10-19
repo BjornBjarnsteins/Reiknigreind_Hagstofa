@@ -9,6 +9,28 @@
 
 source('fetchData.R')
 
+# rounding util function, rounds number to nearest base
+roundTo <- function(number,base){
+  return(round(number/base)*base)
+}
+floorTo <- function(number,base){
+  return(floor(number/base)*base)
+}
+ceilingTo <- function(number,base){
+  return(ceiling(number/base)*base)
+}
+getTicks <- function(a,b,n){
+  print(a)
+  print(b)
+  print(a-b)
+  baseMag <- (10^floor(log10((b-a)/n))) # The order of magnitude for our tick size
+  baseMult <- round((b-a)/(10^floor(log10(b-a))))
+  base <- baseMag*baseMult
+  A <- floorTo(a,base)
+  B <- ceilingTo(b,base)
+  return(seq(A,B,base))
+}
+
 # Index vector to get indices of selected data
 selectIndex <- c(1,2,3,4,5,6)
 names(selectIndex) <- c("income_res", "income_rsa", "schoolreg", "schoolgrad", "prisonSentences","population")
@@ -23,11 +45,7 @@ tablename <- "income_res"
 # 
 # # Use global max/min for axes so the view window stays
 # # constant as the user moves between years
-xlim <- list(
-  min = 0,
-  max = max(datalist[[selectIndex[tablename]]]$Male)+200
-)
-ylim <- list(
+lim <- list(
   min = 0,
   max = max(datalist[[selectIndex[tablename]]]$Male)+200
 )
